@@ -33,26 +33,45 @@ print $result->num_rows[0];
     </div>
   </div>
   <div class="content">
-    <h2>Member List</h2>
-    <div class="member-list">
-      <div class="member">
-        <span>Member 1</span>
-        <div class="member-actions">
-          <button class="profile-btn">View Profile</button>
-          <button class="diet-btn">View Diet</button>
-          <button class="routine-btn">View Routine</button>
-        </div>
-      </div>
-      <div class="member">
-        <span>Member 2</span>
-        <div class="member-actions">
-          <button class="profile-btn">View Profile</button>
-          <button class="diet-btn">View Diet</button>
-          <button class="routine-btn">View Routine</button>
-        </div>
-      </div>
-      
-    </div>
+  <form action="process.php" method="post">
+    <label for="recordSelect">Select a Record:</label>
+    <select name="recordSelect" id="recordSelect">
+        <?php
+        // Establish a connection to MySQL
+        $servername = "localhost"; // Change this to your MySQL server name
+        $username = "root"; // Change this to your MySQL username
+        $password = ""; // Change this to your MySQL password
+        $dbname = "gym_management"; // Change this to your MySQL database name
+
+        // Create connection
+        $conn = new mysqli($servername, $username, $password, $dbname);
+
+        // Check connection
+        if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+        }
+
+        // Fetch records from the database
+        $sql = "SELECT memberID, name FROM member";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            // Output data of each row
+            while ($row = $result->fetch_assoc()) {
+                echo "<option value='" . $row["memberID"] . "'>" . $row["memberID"] . "</option>";
+                
+            }
+        } else {
+            echo "0 results";
+        }
+
+        // Close the database connection
+        $conn->close();
+        ?>
+    </select>
+    <input type="submit" value="Submit">
+</form>
+
   </div>
 </main>
 <script src="js/script.js"></script>

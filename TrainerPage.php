@@ -15,12 +15,20 @@ print $result->num_rows[0];
     <title>Register-ModernGym</title>
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Rubik:400,700'>
     <link rel="stylesheet" href="css/trainerPage.css">
+    
+    <?php
+
+
+    ?>
 </head>
 <body>
+  
 
 <header>
   <h1>Trainer Page</h1>
+  
 </header>
+
 
 <main>
   <div class="sidebar">
@@ -32,16 +40,18 @@ print $result->num_rows[0];
       </div>
     </div>
   </div>
-  <div class="content">
+
   <form action="process.php" method="post">
     <label for="recordSelect">Select a Record:</label>
     <select name="recordSelect" id="recordSelect">
+      
         <?php
-        // Establish a connection to MySQL
-        $servername = "localhost"; // Change this to your MySQL server name
-        $username = "root"; // Change this to your MySQL username
-        $password = ""; // Change this to your MySQL password
-        $dbname = "gym_management"; // Change this to your MySQL database name
+        
+        
+        $servername = "localhost"; 
+        $username = "root"; 
+        $password = ""; 
+        $dbname = "gym_management"; 
 
         // Create connection
         $conn = new mysqli($servername, $username, $password, $dbname);
@@ -53,21 +63,24 @@ print $result->num_rows[0];
 
         // Fetch records from the database
         $sql = "SELECT memberID, name FROM member";
-        $result = $conn->query($sql);
-
+        $results = $conn->query($sql);
+        echo "test";
         if ($result->num_rows > 0) {
             // Output data of each row
-            while ($row = $result->fetch_assoc()) {
-                echo "<option value='" . $row["memberID"] . "'>" . $row["memberID"] . "</option>";
-                
-            }
+            echo "<select name='test'>";
+            foreach($results as $row) {
+                echo "<option value='" . $row['memberID'] . "'>" . $row['username'] . "</option>";
+            }    
+            echo "</select>";
         } else {
+
             echo "0 results";
         }
 
         // Close the database connection
         $conn->close();
         ?>
+        
     </select>
     <input type="submit" value="Submit">
 </form>

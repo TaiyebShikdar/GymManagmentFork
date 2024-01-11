@@ -57,7 +57,9 @@ html {
  
 justify-content: center;
 margin: auto;
-text-align: center
+text-align: center;
+background-color: lightskyblue;
+box-shadow: 0 2px 25px rgba(0, 0, 0, 0.2);
 
 
   
@@ -69,12 +71,17 @@ text-align: center
   justify-content: center;
   margin: auto;
   padding-bottom: 40px;
-  text-align: center
+  text-align: center;
+  background-color:palegreen;
+  box-shadow: 0 2px 25px rgba(0, 0, 0, 0.2);
+
+  
 };
 
 #descriptionLabel 
 {
   margin-top: 10px;
+  
 }
 #dietDescription {
   margin-top: 10px;
@@ -82,4 +89,21 @@ text-align: center
 
   width: 300px;
   height: 100px; 
+}
+
+.btn {
+  position: absolute;
+  top: 20px; /* Header'ın üstünden 20px aşağıda */
+  right: 20px; /* Sağdan 20px içeriye */
+  display: inline-block;
+  padding: 10px 15px;
+  text-decoration: none;
+  background-color: #2ecc71;
+  color: #fff;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #27ae60;
 }

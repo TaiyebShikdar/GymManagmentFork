@@ -1,18 +1,24 @@
 <?php
-/*
-require_once 'includes/DBConnection.php';
-$query = "SELECT * FROM member";
-$conn = OpenCon();
-$result = $conn->query($query);
-print $result->num_rows[0];
-*/
+
+
+@include 'helper/config.php';
+@include 'helper/controller.php';
+
+if (!isset($_SESSION['user_name'])) {
+    header('location:login_form.php');
+   }
+   if ($_SESSION['role'] != 'trainer') {
+     header('Location: index.html');
+   }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Register-ModernGym</title>
+    <title>Trainer Page</title>
+
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Rubik:400,700'>
     <link rel="stylesheet" href="css/trainerPage.css">
     
@@ -21,11 +27,12 @@ print $result->num_rows[0];
 <body>
 <header>
   <h1>Trainer Page</h1>
+  <a href="logout.php" class="btn">Logout</a>
 </header>
   <form action="memberDropdown.php" method="post">
     <label for="memberSelect">Select a Member:</label>
     <select name="memberSelect" id="memberSelect">
-    <option disabled selected value> -- select an option -- </option>
+    <option disabled selected value>  select a member </option>
         <?php
         
         $servername = "localhost";
@@ -67,7 +74,7 @@ print $result->num_rows[0];
     <h3>Duration</h3>
     <textarea name="workoutDuration" id="workoutDuration" placeholder="Enter an integer to represent minutes. Non integer will save this value as a blank"></textarea>
     <h3>Calories</h3>
-    <textarea name="workoutCalories" id="workoutCalories" placeholder="Enter am integer to represent calories burnt. Non integer will be saved as a blank"></textarea>
+    <textarea name="workoutCalories" id="workoutCalories" placeholder="Enter an integer to represent calories burnt. Non integer will be saved as a blank"></textarea>
     <br> <br>
     <button id="updateButton" onclick="updateWorkoutDescription()">Update workout info</button>
 </div>

@@ -16,77 +16,86 @@ print $result->num_rows[0];
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Rubik:400,700'>
     <link rel="stylesheet" href="css/trainerPage.css">
     
-    <?php
-
-
-    ?>
+    
 </head>
 <body>
-  
-
 <header>
   <h1>Trainer Page</h1>
-  
 </header>
-
-
-<main>
-  <div class="sidebar">
-    <div class="search-section">
-      <h2>Search Members</h2>
-      <div class="search-container">
-        <input type="text" id="searchInput" placeholder="Search...">
-        <button type="button" id="searchButton">Search</button>
-      </div>
-    </div>
-  </div>
-
-  <form action="process.php" method="post">
-    <label for="recordSelect">Select a Record:</label>
-    <select name="recordSelect" id="recordSelect">
-      
+  <form action="memberDropdown.php" method="post">
+    <label for="memberSelect">Select a Member:</label>
+    <select name="memberSelect" id="memberSelect">
+    <option disabled selected value> -- select an option -- </option>
         <?php
         
-        
-        $servername = "localhost"; 
-        $username = "root"; 
-        $password = ""; 
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
         $dbname = "gym_management"; 
 
-        // Create connection
+     
         $conn = new mysqli($servername, $username, $password, $dbname);
 
-        // Check connection
+       
         if ($conn->connect_error) {
             die("Connection failed: " . $conn->connect_error);
         }
 
-        // Fetch records from the database
-        $sql = "SELECT memberID, name FROM member";
-        $results = $conn->query($sql);
-        echo "test";
+        //retrieves users with member role
+        $sql = "SELECT memberID, username FROM member WHERE member.role = 'member'"; 
+        $result = $conn->query($sql);
+        
         if ($result->num_rows > 0) {
-            // Output data of each row
-            echo "<select name='test'>";
-            foreach($results as $row) {
-                echo "<option value='" . $row['memberID'] . "'>" . $row['username'] . "</option>";
-            }    
-            echo "</select>";
+            //loops through query result to add options to the drop down
+            while ($row = $result->fetch_assoc()) {
+                echo "<option value='" . $row["memberID"] . "'>" . $row["username"] . "</option>";
+            }
         } else {
-
-            echo "0 results";
+            echo "<option value=''>No members found</option>";
         }
 
-        // Close the database connection
+       
         $conn->close();
         ?>
-        
     </select>
-    <input type="submit" value="Submit">
-</form>
+  </form>      
+  
+ 
+<div id="workoutDescriptionContainer">
+    <h3>Workout Description</h3>
+    <textarea name="workoutDescription" id="workoutDescription" placeholder="Enter workout description here"></textarea>
+    <h3>Duration</h3>
+    <textarea name="workoutDuration" id="workoutDuration" placeholder="Enter an integer to represent minutes. Non integer will save this value as a blank"></textarea>
+    <h3>Calories</h3>
+    <textarea name="workoutCalories" id="workoutCalories" placeholder="Enter am integer to represent calories burnt. Non integer will be saved as a blank"></textarea>
+    <br> <br>
+    <button id="updateButton" onclick="updateWorkoutDescription()">Update workout info</button>
+</div>
+<br>
 
-  </div>
-</main>
-<script src="js/script.js"></script>
+<div id="dietContainer">
+        <h3>Diet Plan</h3>
+        <textarea name="dietDescription" id="dietDescription" placeholder="Enter diet description here"></textarea>
+        
+        <h3>Calories</h3>
+        <textarea name="calories" id="calories" placeholder="Calories"></textarea>
+        
+        <h3>Fats</h3>
+        <textarea name="fats" id="fats" placeholder="Fats"></textarea>
+        
+        <h3>Carbs</h3>
+        <textarea name = "carbs" id="carbs" placeholder="Carbs"></textarea>
+        
+        <h3>Protein</h3>
+        <textarea name = "protein" id="protein" placeholder="Protein"></textarea>
+        <br>
+        <button id = "dietButton" id ="updateDietButton" onclick="updateDietDescription()">Update Description</button>
+        
+        
+</div>
+<br>
+<script src = "js/TrainerPage.js"></script>
+
+
 </body>
 </html>

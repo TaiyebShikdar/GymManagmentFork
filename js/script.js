@@ -32,3 +32,4 @@ document.getElementById('recordSelect').addEventListener('change', function() {
   request.open('GET', 'get_record_details.php?id=' + selectedId, true);
   request.send();
 });
+

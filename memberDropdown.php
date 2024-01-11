@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['memberSelect'])) {
     $selectedMemberID = $_POST['memberSelect'];
 
     // Prepare and bind the SELECT statement with a parameter
-    $sql = "SELECT * FROM member WHERE memberID = ?";
+    $sql = "SELECT * FROM member WHERE memberID = ? ";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $selectedMemberID); // "i" represents integer type, assuming 'id' is an integer
 

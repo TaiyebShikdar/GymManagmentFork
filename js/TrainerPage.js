@@ -2,7 +2,7 @@
 function fetchWorkoutDescription() {
     var selectedMemberID = document.getElementById('memberSelect').value;
     var xhr = new XMLHttpRequest();
-    console.log(response.workoutDescription);
+    
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
@@ -10,7 +10,7 @@ function fetchWorkoutDescription() {
                 document.getElementById('workoutDescription').value = response.workoutDescription || '';
                 document.getElementById('workoutDuration').value = response.workoutDuration || '';
                 document.getElementById('workoutCalories').value = response.workoutCalories || '';
-                document.getElementById('dietDescription').value = response.workoutDescription || '';
+                document.getElementById('dietDescription').value = response.dietDescription || '';
                 document.getElementById('calories').value = response.calories || '';
                 document.getElementById('fats').value = response.fats || '';
                 document.getElementById('carbs').value = response.carbs || '';
@@ -61,4 +61,44 @@ function fetchWorkoutDescription() {
     xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
     xhr.send('memberID=' + selectedMemberID + '&workoutDescription=' + encodeURIComponent(workoutDescription)
     + '&workoutDuration=' + workoutDuration + '&workoutCalories='+ workoutCalories);
+  }
+
+
+
+  function updateDietDescription() {
+    
+    var dietDescription = document.getElementById('dietDescription').value;
+    var fatsText = document.getElementById('fats').value;
+    var proteinText = document.getElementById('protein').value;
+    var carbsText = document.getElementById('carbs').value;
+    var caloriesText = document.getElementById('calories').value;
+    var selectedMemberID = document.getElementById('memberSelect').value;
+    
+    var data = {
+        memberID: selectedMemberID,
+        dietDescription: dietDescription,
+        caloriesText: caloriesText,
+        carbsText: carbsText,
+        proteinText: proteinText,
+        fatsText: fatsText
+    };
+    
+  
+
+    // Make a POST request using the Fetch API
+    fetch('update_diet_details.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json', // Set the content type to JSON
+        },
+        body: JSON.stringify(data), // Convert data to JSON format
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log('Response:', data);
+        // Process the response here
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
   }
